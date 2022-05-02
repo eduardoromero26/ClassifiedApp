@@ -10,11 +10,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  rounded_floating_app_bar: ^0.1.0
   get: ^4.6.1
   get_storage: ^2.0.3
   http: ^0.13.4
   image_picker: ^0.8.5
+  url_launcher: ^6.1.0
 
 
 

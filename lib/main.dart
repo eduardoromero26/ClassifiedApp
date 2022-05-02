@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_name/screens/EditAdd.dart';
-import 'package:project_name/screens/MyAds.dart';
-import 'package:project_name/screens/Settings.dart';
-import 'package:project_name/screens/editProfile.dart';
 import 'package:project_name/screens/home.dart';
 import 'package:get/get.dart';
 import 'package:project_name/screens/login.dart';
@@ -20,16 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: LoginScreen()
     );
-  }
-}
-
-class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

@@ -31,7 +31,7 @@ class _LoginScreenState extends State<SignupScreen> {
 
     //esta variable contiene la peticion a register
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + "/auth/register"),
+      Uri.parse(Constants().apiURL + "auth/register"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "name": _nameCtrl.text,

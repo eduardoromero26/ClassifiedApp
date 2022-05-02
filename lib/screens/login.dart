@@ -16,15 +16,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _passwordCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController(text: "eduardo@mail.com");
+  final TextEditingController _passwordCtrl = TextEditingController(text: "123456");
   final box = GetStorage();
 
   login() async {
     print(_emailCtrl.text);
     print(_passwordCtrl.text);
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + "/auth/login"),
+      Uri.parse(Constants().apiURL + "auth/login"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "email": _emailCtrl.text,
@@ -36,7 +36,14 @@ class _LoginScreenState extends State<LoginScreen> {
     if (tmp["status"] == true) {
       print(tmp["data"]["token"]);
       box.write('token', tmp["data"]["token"]);
+
+       box.write('name', tmp["data"]["user"]["name"]);
+      box.write('email', tmp["data"]["user"]["email"]);
+      box.write('mobile', tmp["data"]["user"]["mobile"]);
+      box.write('imgURL', tmp["data"]["user"]["imgURL"]);
       Get.offAll(const HomeScreen());
+
+      
     }
   }
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-class DetailImageScreen extends StatelessWidget {
+class SingleImageSongScreen extends StatelessWidget {
   final String SingleImageURL;
 
-  const DetailImageScreen({
+  const SingleImageSongScreen({
     Key? key,
     required this.SingleImageURL,
   }) : super(key: key);
@@ -15,7 +14,7 @@ class DetailImageScreen extends StatelessWidget {
       // ignore: avoid_unnecessary_containers
       body: Center(
         child: Container(
-          child: Image.asset(
+          child: Image.network(
             SingleImageURL,
             height: 320,
             width: double.infinity,

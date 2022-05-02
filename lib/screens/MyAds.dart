@@ -1,50 +1,69 @@
-import 'package:flutter/material.dart';
-import 'package:project_name/custom-widgets/MyAdsWidget.dart';
-//import 'package:project_name/screens/MyMusic.dart';
-import 'package:project_name/screens/home.dart';
-//import 'package:project_name/custom-widgets/MyMusicWidget.dart';
+import 'dart:convert';
 
-class MyAdsScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:project_name/custom-widgets/MyAdsWidget.dart';
+
+import 'package:http/http.dart' as http;
+
+import '../util/constants.dart';
+
+class MyAdsScreen extends StatefulWidget {
   const MyAdsScreen({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<MyAdsScreen> createState() => _MyAdsScreenState();
+}
+
+class _MyAdsScreenState extends State<MyAdsScreen> {
+  List objApi = [];
+  final box = GetStorage();
+
+  Future fetchAds() async {
+    try {
+      var token = box.read('token');
+      var resp =
+          await http.post(Uri.parse(Constants().apiURL + 'ads/user'), headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+      var data = json.decode(resp.body);
+
+      // Validations
+      return data['data'];
+    } catch (e) {
+      return "Error";
+    }
+  }
+
+  Future getAdsFromApi() async {
+    var resp = await fetchAds();
+    setState(() {
+      objApi = resp;
+    });
+  }
+
+  @override
+  void initState() {
+    getAdsFromApi();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("My Ads"),
-          backgroundColor: Colors.black,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: const [
-              MyAdsWidget(
-                  imageURL: "assets/images/mobile_1.jpeg",
-                  productTitle: "Huawei for Sale",
-                  date: "14 days ago",
-                  price: "12000.0"),
-              SizedBox(
-                height: 8,
-              ),
-              MyAdsWidget(
-                  imageURL: "assets/images/macbook_1.jpg",
-                  productTitle: "Macbook Pro 2020",
-                  date: "4 days ago",
-                  price: "33000.0"),
-              SizedBox(
-                height: 8,
-              ),
-              MyAdsWidget(
-                  imageURL: "assets/images/car_2.jpeg",
-                  productTitle: "Swift 2020",
-                  date: "27 days ago",
-                  price: "130000.0"),
-            ],
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("My Ads"),
+        backgroundColor: Colors.black,
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(8),
+        itemCount: objApi.length,
+        itemBuilder: (BuildContext context, int index) {
+          return MyAdsWidget(objApi: objApi[index]);
+        },
       ),
     );
   }
