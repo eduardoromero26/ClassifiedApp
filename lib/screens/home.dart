@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_name/custom-widgets/ProductCardWidget.dart';
+import 'package:project_name/custom-widgets/product_card_widget.dart';
 import 'package:project_name/screens/Settings.dart';
-import 'package:project_name/screens/createAdd.dart';
+import 'package:project_name/screens/create_add.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

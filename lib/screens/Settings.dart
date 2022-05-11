@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_name/screens/MyAds.dart';
+import 'package:project_name/screens/my_ads.dart';
 import 'package:project_name/screens/profile.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

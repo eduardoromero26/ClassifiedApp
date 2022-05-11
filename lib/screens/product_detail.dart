@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'detailImage.dart';
+import 'detail_Image.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final Map objApi;

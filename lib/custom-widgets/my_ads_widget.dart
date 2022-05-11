@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_name/screens/EditAdd.dart';
+import 'package:project_name/screens/edit_add.dart';
 
 class MyAdsWidget extends StatelessWidget {
   final Map objApi;
