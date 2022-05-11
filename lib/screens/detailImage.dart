@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class SingleImageSongScreen extends StatelessWidget {
   final String SingleImageURL;
 

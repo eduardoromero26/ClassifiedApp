@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_name/screens/MyAds.dart';
 import 'package:project_name/screens/home.dart';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
@@ -46,7 +45,7 @@ class _EditAddScreenState extends State<EditAddScreen> {
     if (images!.isNotEmpty) {
       // upload image
       var request = http.MultipartRequest(
-          "POST", Uri.parse(Constants().apiURL + 'upload/photos'));
+          "POST", Uri.parse(Constants().apiURL + '/upload/photos'));
       images.forEach((image) async {
         request.files
             .add(await http.MultipartFile.fromPath('photos', image.path));
@@ -60,7 +59,6 @@ class _EditAddScreenState extends State<EditAddScreen> {
         _uploadImages.addAll(jsonObj["data"]["path"]);
       });
     } else {
-      print("No image picked");
     }
   }
 
@@ -80,7 +78,6 @@ class _EditAddScreenState extends State<EditAddScreen> {
         "images": _uploadImages,
       }),
     );
-    print(json.decode(resp.body));
     Get.offAll(const HomeScreen());
   }
 
@@ -93,7 +90,6 @@ class _EditAddScreenState extends State<EditAddScreen> {
         'Authorization': 'Bearer $token'
       },
     );
-    print(json.decode(resp.body));
     Get.offAll(const HomeScreen());
   }
 
@@ -102,8 +98,6 @@ class _EditAddScreenState extends State<EditAddScreen> {
     readAdData();
     super.initState();
   }
-
-/* */
 
   @override
   Widget build(BuildContext context) {
@@ -267,24 +261,3 @@ class _EditAddScreenState extends State<EditAddScreen> {
     );
   }
 }
-
-
-/*
-
- ListView.builder(
-            padding: const EdgeInsets.all(8),
-            scrollDirection: Axis.horizontal,
-            itemCount: imagesLenght,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: const EdgeInsets.only(right: 12),
-                child: Image.(
-                  widget.objApi['images'][index],
-                  height: 80,
-                  width: 80,
-                ),
-              );
-            },
-          ), 
-
-          */

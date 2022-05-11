@@ -24,8 +24,8 @@ class _MyAdsScreenState extends State<MyAdsScreen> {
   Future fetchAds() async {
     try {
       var token = box.read('token');
-      var resp =
-          await http.post(Uri.parse(Constants().apiURL + 'ads/user'), headers: {
+      var resp = await http
+          .post(Uri.parse(Constants().apiURL + '/ads/user'), headers: {
         'Content-type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });

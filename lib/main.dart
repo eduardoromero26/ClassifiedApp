@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_name/screens/home.dart';
 import 'package:get/get.dart';
 import 'package:project_name/screens/login.dart';
 import 'package:get_storage/get_storage.dart';

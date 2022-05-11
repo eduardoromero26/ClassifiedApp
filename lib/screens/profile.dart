@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   readUserData() async {
     var token = box.read('token');
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + 'user/profile'),
+      Uri.parse(Constants().apiURL + '/user/profile'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
@@ -33,7 +33,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
     var tmp = json.decode(resp.body);
 
-    print(tmp);
     if (tmp['status'] == true) {
       _nameCtrl.text = tmp['data']['name'];
       _emailCtrl.text = tmp['data']['email'];
@@ -50,11 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _imagePath = image.path;
       });
-      print(_imagePath);
-      
-    } else {
-      print("No image picked");
-    }
+    } else {}
   }
 
   updateProfile() async {
@@ -66,7 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var respData = await res.stream.toBytes();
     var respStr = String.fromCharCodes(respData);
     var jsonObj = json.decode(respStr);
-    print(jsonObj["data"]["path"]);
 
     setState(() {
       _profileImage = jsonObj["data"]["path"];
@@ -87,7 +81,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "imgURL": _profileImage,
       }),
     );
-    print(json.decode(resp.body));
   }
 
   @override

@@ -9,7 +9,6 @@ class MyAdsWidget extends StatelessWidget {
     Key? key,
     required this.objApi,
   }) : super(key: key);
-  
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,6 @@ class MyAdsWidget extends StatelessWidget {
           Get.to(EditAddScreen(
             objApi: objApi,
           ));
-          print(objApi);
         },
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -54,12 +52,13 @@ class MyAdsWidget extends StatelessWidget {
                         height: 4,
                       ),
                       Row(
-                        children: const [
-                          Icon(Icons.alarm_on, size: 12, color: Colors.black45),
+                        children: [
+                          const Icon(Icons.alarm_on,
+                              size: 12, color: Colors.black45),
                           Text(
-                            "15 days ago",
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.black54),
+                            objApi["createdAt"],
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black54),
                           ),
                         ],
                       ),

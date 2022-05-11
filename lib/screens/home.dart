@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   readUserData() async {
     var token = box.read('token');
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + 'user/profile'),
+      Uri.parse(Constants().apiURL + '/user/profile'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     var tmp = json.decode(resp.body);
 
-    print(tmp);
     if (tmp['status'] == true) {
       _profileImage = tmp['data']['imgURL'];
       setState(() {});
@@ -44,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future fetchAds() async {
     try {
       var resp =
-          await http.get(Uri.parse(Constants().apiURL + 'ads'), headers: {
+          await http.get(Uri.parse(Constants().apiURL + '/ads'), headers: {
         'Content-type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
       });
@@ -75,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
     getAdsFromApi();
     readUserData();
     super.initState();
-  
   }
 
   @override
@@ -93,10 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.orange[900],
         foregroundColor: Colors.white,
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const CreateAddScreen()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const CreateAddScreen()));
           // Respond to button press
         },
         child: const Icon(Icons.add_a_photo_outlined),
@@ -134,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           itemCount: objApi.length,
           itemBuilder: (BuildContext context, int index) {
-            // return ProductCardWidget(productName: objApi[index]['title'], price: objApi[index]['price'].toString(), imageURL: objApi[index]['images'][0], description: objApi[index]['description']);
             return ProductCardWidget(objApi: objApi[index]);
           },
         ),

@@ -5,22 +5,20 @@ import 'package:project_name/screens/ProductDetail.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final Map objApi;
-  
 
   const ProductCardWidget({
     Key? key,
     required this.objApi,
-
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-       onTap: () {
+      onTap: () {
         Get.to(ProductDetailScreen(
           objApi: objApi,
-         ));
-       },
+        ));
+      },
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -51,7 +49,6 @@ class ProductCardWidget extends StatelessWidget {
                     color: Colors.orange[800],
                   ),
                 ),
-                
               ],
             ),
           )

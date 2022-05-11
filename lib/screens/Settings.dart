@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:project_name/util/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -26,7 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   readUserData() async {
     var token = box.read('token');
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + 'user/profile'),
+      Uri.parse(Constants().apiURL + '/user/profile'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
@@ -34,13 +35,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
     var tmp = json.decode(resp.body);
 
-    print(tmp);
     if (tmp['status'] == true) {
       _name = tmp['data']['name'];
       _mobile = tmp['data']['mobile'];
       _profileImage = tmp['data']['imgURL'];
       setState(() {});
     }
+  }
+
+  openURL(url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      launchUrl(Uri.parse(url));
+    } else {}
   }
 
   @override
@@ -159,7 +165,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: 20,
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        openURL("https:flutter.dev");
+                      },
                       child: const Text(
                         "About Us",
                         style: TextStyle(color: Colors.black),
@@ -180,7 +188,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: 20,
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        openURL("tel:" + _mobile);
+                      },
                       child: const Text(
                         "Contact Us",
                         style: TextStyle(color: Colors.black),

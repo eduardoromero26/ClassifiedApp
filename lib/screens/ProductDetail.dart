@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'detailImage.dart';
 
-double _value = 0.0;
-
-// ignore: camel_case_types
 class ProductDetailScreen extends StatelessWidget {
-    final Map objApi;
-
+  final Map objApi;
 
   const ProductDetailScreen({
     Key? key,
     required this.objApi,
   }) : super(key: key);
 
+  openURL(url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      launchUrl(Uri.parse(url));
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-          Get.to(SingleImageSongScreen(
-           SingleImageURL: objApi['images'][0],
-         ));
+        Get.to(SingleImageSongScreen(
+          SingleImageURL: objApi['images'][0],
+        ));
       },
       child: Scaffold(
         appBar: AppBar(
@@ -30,9 +32,7 @@ class ProductDetailScreen extends StatelessWidget {
         ),
         // ignore: avoid_unnecessary_containers
         body: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 8
-          ),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,22 +68,24 @@ class ProductDetailScreen extends StatelessWidget {
                   vertical: 8,
                 ),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.person,
                       size: 12,
                       color: Colors.black54,
                     ),
                     Text(
-                      "All",
-                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                      objApi['authorName'],
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.black54),
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.lock_clock_outlined,
+                    const SizedBox(width: 8),
+                    const Icon(Icons.lock_clock_outlined,
                         size: 12, color: Colors.black54),
                     Text(
-                      "14 Days ago",
-                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                      objApi["createdAt"],
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.black54),
                     ),
                   ],
                 ),
@@ -92,10 +94,12 @@ class ProductDetailScreen extends StatelessWidget {
                 height: 8,
               ),
               Container(
-                child: Text(objApi['description'],
-                style: const TextStyle(
-                  fontSize: 18,
-                ),),
+                child: Text(
+                  objApi['description'],
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 24,
@@ -107,7 +111,9 @@ class ProductDetailScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[800],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    openURL("tel:" + objApi['mobile']);
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

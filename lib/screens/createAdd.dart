@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_name/screens/MyAds.dart';
 import 'package:project_name/screens/home.dart';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
@@ -26,13 +24,14 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
 
   var _uploadImages = [];
   final box = GetStorage();
+  var areImages = false;
 
   pickMultipleImage() async {
     var images = await ImagePicker().pickMultiImage();
     if (images!.isNotEmpty) {
       // upload image
       var request = http.MultipartRequest(
-          "POST", Uri.parse(Constants().apiURL + 'upload/photos'));
+          "POST", Uri.parse(Constants().apiURL + '/upload/photos'));
       images.forEach((image) async {
         request.files
             .add(await http.MultipartFile.fromPath('photos', image.path));
@@ -45,15 +44,13 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
       setState(() {
         _uploadImages.addAll(jsonObj["data"]["path"]);
       });
-    } else {
-      print("No image picked");
-    }
+    } else {}
   }
 
   createAdd() async {
     var token = box.read('token');
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + 'ads'),
+      Uri.parse(Constants().apiURL + '/ads'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
@@ -66,7 +63,6 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
         "images": _uploadImages,
       }),
     );
-    print(json.decode(resp.body));
     Get.offAll(const HomeScreen());
   }
 
@@ -83,13 +79,14 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20.0,
-          horizontal: 16.0,
-        ),
-        children: [
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(
+            top: 16.0,
+            right: 16.0,
+            left: 16.0,
+          ),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
@@ -115,8 +112,27 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: 4),
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                scrollDirection: Axis.horizontal,
+                itemCount: _uploadImages.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: Image.network(
+                      _uploadImages[index],
+                      height: 80,
+                      width: 80,
+                    ),
+                  );
+                },
+              ),
+            ),
             const SizedBox(
-              height: 20,
+              height: 12,
             ),
             TextField(
               controller: _titleCtrl,
@@ -130,6 +146,7 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
             ),
             TextField(
               controller: _priceCtrl,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Price',
@@ -140,6 +157,7 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
             ),
             TextField(
               controller: _mobileCtrl,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Contact Number',
@@ -151,18 +169,18 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
             TextField(
               controller: _descriptionCtrl,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Description',
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 40,
-                    horizontal: 12,
-                  ),
-                  floatingLabelAlignment: FloatingLabelAlignment.center),
+                border: OutlineInputBorder(),
+                labelText: 'Description',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 40,
+                  horizontal: 12,
+                ),
+              ),
             ),
             const SizedBox(
-              height: 32,
+              height: 28,
             ),
-            Container(
+            SizedBox(
               width: 360,
               height: 60,
               child: ElevatedButton(
@@ -177,7 +195,7 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     Text(
-                      "Upload",
+                      "Create Ad",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -188,7 +206,7 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
               ),
             ),
           ]),
-        ],
+        ),
       ),
     );
   }

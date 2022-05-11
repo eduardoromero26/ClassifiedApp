@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_name/screens/home.dart';
 import 'package:project_name/screens/login.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,26 +11,20 @@ class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignupScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<SignupScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _nameCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
   final TextEditingController _mobileCtrl = TextEditingController();
-
   final box = GetStorage();
 
+  //esta variable contiene la peticion a register
   signup() async {
-    print(_nameCtrl.text);
-    print(_emailCtrl.text);
-    print(_passwordCtrl.text);
-    print(_mobileCtrl.text);
-
-    //esta variable contiene la peticion a register
     var resp = await http.post(
-      Uri.parse(Constants().apiURL + "auth/register"),
+      Uri.parse(Constants().apiURL + "/auth/register"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "name": _nameCtrl.text,
@@ -40,15 +33,10 @@ class _LoginScreenState extends State<SignupScreen> {
         "mobile": _mobileCtrl.text,
       }),
     );
-    //guardando en una variable local el token y id del usuario
-    print(json.decode(resp.body));
     var tmp = json.decode(resp.body);
     if (tmp["status"] == true) {
-      print(tmp["data"]["token"]);
       box.write('token', tmp["data"]["token"]);
-
-      //no te permite regresar
-      Get.offAll(const HomeScreen());
+      Get.offAll(const LoginScreen());
     }
   }
 
