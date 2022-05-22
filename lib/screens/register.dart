@@ -97,7 +97,6 @@ class _RegisterScreenState extends State<registerScreen> {
                         ),
                         TextField(
                           controller: _emailCtrl,
-                          obscureText: false,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Email Adress',
@@ -108,7 +107,7 @@ class _RegisterScreenState extends State<registerScreen> {
                         ),
                         TextField(
                           controller: _mobileCtrl,
-                          obscureText: false,
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             border: const OutlineInputBorder(),
                             labelText: 'Mobile Number',

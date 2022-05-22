@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_name/screens/MyAds.dart';
 import 'package:project_name/screens/profile.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,12 +19,12 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   var userObj = {};
   var _imageURL = "";
-  final TextEditingController _nameCtrl = TextEditingController();
-  final TextEditingController _emailCtrl = TextEditingController();
+  var _userName = "";
+  var _userMobile = "";
   final TextEditingController _mobileCtrl = TextEditingController();
 
-  getUserData() {
-    FirebaseFirestore.instance
+  getUserData() async {
+    await FirebaseFirestore.instance
         .collection("accounts")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
@@ -31,9 +32,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(
         () {
           userObj = {"id": res.id, ...res.data()!};
-          _nameCtrl.text = userObj['displayName'];
-          _emailCtrl.text = userObj['email'];
-          _mobileCtrl.text = userObj['mobile'];
+          _userName = userObj['displayName'];
+          _userMobile = userObj['mobile'];
           _imageURL = userObj['imageURL'];
         },
       );
@@ -48,8 +48,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
-    super.initState();
     getUserData();
+    super.initState();
   }
 
   @override
@@ -88,7 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _nameCtrl.text,
+                              _userName,
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               height: 4,
                             ),
                             Text(
-                              _mobileCtrl.text,
+                              _userMobile,
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.black38,
@@ -135,7 +135,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: 20,
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(MyAdsScreen());
+                      },
                       child: const Text(
                         "My Ads",
                         style: const TextStyle(color: Colors.black),

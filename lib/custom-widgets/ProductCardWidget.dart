@@ -25,7 +25,7 @@ class ProductCardWidget extends StatelessWidget {
               height: double.infinity,
               width: double.infinity,
               child: Image.network(
-                objApi['images'][0],
+                objApi['images'],
                 fit: BoxFit.cover,
               )),
           Container(

@@ -22,9 +22,7 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(SingleImageScreen(
-          SingleImageURL: objApi
-        ));
+        Get.to(SingleImageScreen(SingleImageURL: objApi));
       },
       child: Scaffold(
         appBar: AppBar(
@@ -62,7 +60,7 @@ class ProductDetailScreen extends StatelessWidget {
               Container(
                   height: 200,
                   width: double.infinity,
-                  child: Image.network(objApi['images'][0], fit: BoxFit.cover)),
+                  child: Image.network(objApi['images'], fit: BoxFit.cover)),
               Container(
                 margin: const EdgeInsets.symmetric(
                   vertical: 8,
@@ -82,8 +80,8 @@ class ProductDetailScreen extends StatelessWidget {
                     const SizedBox(width: 8),
                     const Icon(Icons.lock_clock_outlined,
                         size: 12, color: Colors.black54),
-                    Text(
-                      objApi["createdAt"],
+                    const Text(
+                      'createdAt',
                       style:
                           const TextStyle(fontSize: 12, color: Colors.black54),
                     ),

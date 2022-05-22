@@ -31,6 +31,7 @@ class AuthController extends GetxController {
       "displayName": user['displayName'],
       "email": user['email'],
       "mobile": user['mobile'],
+      "imageURL": "https://picsum.photos/200/300",
       "createdAt": FieldValue.serverTimestamp()
     });
   }
@@ -48,8 +49,8 @@ class AuthController extends GetxController {
       _profileCtrl.createProfileOnFireStore({
         "uid": userRef.user!.uid,
         "displayName": account.displayName,
-        "email": account.displayName,
-        "mobile": "",
+        "email": account.email,
+        "imageURL": account.photoUrl,
         "createdAt": FieldValue.serverTimestamp()
       });
     }

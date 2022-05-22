@@ -152,6 +152,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               ),
               TextField(
                 controller: _mobileCtrl,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Mobile',

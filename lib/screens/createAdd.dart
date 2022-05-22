@@ -27,8 +27,10 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
   TextEditingController _mobileCtrl = TextEditingController();
   TextEditingController _priceCtrl = TextEditingController();
   var _imageAd = "";
+  var userObj;
   var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
+  var _userName;
 
   String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
@@ -53,17 +55,39 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
 
   createAdd() async {
     var uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance.collection("ads").doc(uid).set({
+    FirebaseFirestore.instance.collection("ads").doc(getRandomString(12)).set({
       "uid": FirebaseAuth.instance.currentUser!.uid,
       "title": _titleCtrl.text,
       "description": _descriptionCtrl.text,
       "mobile": _mobileCtrl.text,
       "price": _priceCtrl.text,
       "images": _imageAd,
+      "authorName": _userName,
+      "createdAt": FieldValue.serverTimestamp(),
     });
     Get.offAll(const HomeScreen());
   }
 
+   getUserData() {
+    FirebaseFirestore.instance
+        .collection("accounts")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((res) {
+      setState(
+        () {
+          userObj = {"id": res.id, ...res.data()!};
+          _userName = userObj['displayName'];
+        },
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,24 +131,6 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
               ),
             ),
             const SizedBox(height: 4),
-            /*SizedBox(
-              height: 100,
-              child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                scrollDirection: Axis.horizontal,
-                itemCount: _uploadImages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: const EdgeInsets.only(right: 12),
-                    child: Image.network(
-                      _uploadImages[index],
-                      height: 80,
-                      width: 80,
-                    ),
-                  );
-                },
-              ),
-            ),*/
             const SizedBox(
               height: 12,
             ),

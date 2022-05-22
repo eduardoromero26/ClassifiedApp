@@ -46,14 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getAdsData() async {
     QuerySnapshot querySnapshotAds = await adsCollection.get();
-    // Get data from docs and convert map to List
-    adsObj = querySnapshotAds.docs.map((doc) => doc.data()).toList();
-
-    print(adsObj);
+    setState(() {
+      adsObj = querySnapshotAds.docs.map((doc) => doc.data()).toList();
+    });
   }
 
   Future getAdsLoadingController() async {
     var resp = await getAdsData();
+    print(adsObj);
     if (resp != "Error") {
       setState(() {
         isLoading = false;
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 12,
             ),
           ]),
-      /* body: Container(
+        body: Container(
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -126,10 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           itemCount: adsObj.length,
           itemBuilder: (BuildContext context, int index) {
-            return ProductCardWidget(objApi: adsObj);
+            return ProductCardWidget(objApi: adsObj[index]);
           },
         ),
-      ),*/
+      ),
     );
   }
 }
