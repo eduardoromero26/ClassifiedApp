@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var userObj = {};
   bool isLoading = true;
   String _profileImage = "";
-  Map adsObj = {};
+  var adsObj;
 
   final TextEditingController _nameCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
@@ -26,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _adTitleCtrl = TextEditingController();
   final TextEditingController _adPriceCtrl = TextEditingController();
   final TextEditingController _adImageAdCtrl = TextEditingController();
+  CollectionReference adsCollection =
+      FirebaseFirestore.instance.collection('ads');
 
   getUserData() {
     FirebaseFirestore.instance
@@ -41,27 +43,17 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     });
   }
-/*
-  getAdsData() {
-    FirebaseFirestore.instance
-        .collection("ads")
-        .doc()
-        .get()
-        .then((res) {
-      setState(
-        () {
-          adsObj = {"id": res.id, ...res.data()!};
 
-          _adTitleCtrl.text = userObj['displayName'];
-          _adPriceCtrl.text = userObj['price'];
-          _adImageAdCtrl.text = userObj['imageURL'];
-        },
-      );
-    });
+  getAdsData() async {
+    QuerySnapshot querySnapshotAds = await adsCollection.get();
+    // Get data from docs and convert map to List
+    adsObj = querySnapshotAds.docs.map((doc) => doc.data()).toList();
+
+    print(adsObj);
   }
-*/
+
   Future getAdsLoadingController() async {
-    var resp = await getUserData();
+    var resp = await getAdsData();
     if (resp != "Error") {
       setState(() {
         isLoading = false;
@@ -75,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    getUserData();
     getAdsLoadingController();
     super.initState();
   }
@@ -122,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 12,
             ),
           ]),
-      body: Container(
+      /* body: Container(
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -136,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return ProductCardWidget(objApi: adsObj);
           },
         ),
-      ),
+      ),*/
     );
   }
 }
