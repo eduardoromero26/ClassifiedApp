@@ -22,7 +22,7 @@ class MyProfileScreen extends StatefulWidget {
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
   var userObj = {};
-  var _imageURL = "https://picsum.photos/200/300";
+  var _imageURL = "";
   final ProfileController _profileCtrl = Get.put(ProfileController());
   final AuthController _authCtrl = AuthController();
 
@@ -48,6 +48,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           _nameCtrl.text = userObj['displayName'];
           _emailCtrl.text = userObj['email'];
           _mobileCtrl.text = userObj['mobile'];
+          _imageURL = userObj['imageURL'];
         },
       );
     });
@@ -60,7 +61,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       var storageRef = await FirebaseStorage.instance
           .ref()
           .child("uploads")
-          .child(getRandomString(12))
+          .child(userObj['uid'])
           .putFile(file);
 
       var uploadedURL = await storageRef.ref.getDownloadURL();

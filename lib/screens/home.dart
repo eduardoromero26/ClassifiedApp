@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   getAdsData() {
     FirebaseFirestore.instance
         .collection("ads")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc()
         .get()
         .then((res) {
       setState(

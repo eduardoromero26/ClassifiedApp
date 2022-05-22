@@ -16,7 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _emailCtrl = TextEditingController(text: "edu@mail.com");
+  TextEditingController _emailCtrl =
+      TextEditingController(text: "edu@mail.com");
   TextEditingController _passwordCtrl = TextEditingController(text: "123456");
   AuthController _auth = Get.put(AuthController());
 
@@ -81,30 +82,35 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: 'Password',
                           ),
                         ),
-                        const SizedBox(
-                          height: 100,
+                        SizedBox(
+                          height: 20,
                         ),
                         SizedBox(
                           width: 360,
-                          height: 52,
+                          height: 60,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.orange[800],
                             ),
                             onPressed: () {
-                             _auth.loginWithEmailPassword(_emailCtrl.text, _passwordCtrl.text);
+                              _auth.loginWithEmailPassword(
+                                  _emailCtrl.text, _passwordCtrl.text);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "Login",
+                                  "Login with Mail",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
                                 ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(Icons.mail_outline),
                               ],
                             ),
                           ),
@@ -114,10 +120,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(
                           width: 360,
-                          height: 52,
+                          height: 60,
                           child: ElevatedButton(
                             onPressed: () {
-                               _auth.loginWithGoogle();
+                              _auth.loginWithGoogle();
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -129,6 +135,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  Icons.person_outlined,
                                 ),
                               ],
                             ),
