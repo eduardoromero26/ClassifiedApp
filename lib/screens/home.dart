@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_name/custom-widgets/ProductCardWidget.dart';
-import 'package:project_name/screens/Settings.dart';
-import 'package:project_name/screens/createAdd.dart';
+import 'package:project_name/screens/settings.dart';
+import 'package:project_name/screens/create_ad.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

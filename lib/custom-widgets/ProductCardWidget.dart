@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_name/screens/ProductDetail.dart';
+import 'package:project_name/screens/product_detail.dart';
 
 class ProductCardWidget extends StatelessWidget {
   var objApi = {};

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'detailImage.dart';
+import 'detail_image.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   var objApi;
@@ -22,7 +22,7 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(SingleImageScreen(SingleImageURL: objApi));
+        Get.to(SingleImageScreen(SingleImageURL: objApi['images']));
       },
       child: Scaffold(
         appBar: AppBar(

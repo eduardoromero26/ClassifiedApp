@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:project_name/controllers/auth.dart';
 import 'package:project_name/controllers/profile.dart';
 import 'package:project_name/custom-widgets/MyAdsWidget.dart';
-import 'package:project_name/screens/Settings.dart';
+import 'package:project_name/screens/settings.dart';
 
 class MyAdsScreen extends StatefulWidget {
   const MyAdsScreen({

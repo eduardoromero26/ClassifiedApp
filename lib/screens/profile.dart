@@ -45,10 +45,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       setState(
         () {
           userObj = {"id": res.id, ...res.data()!};
-          _nameCtrl.text = userObj['displayName'];
-          _emailCtrl.text = userObj['email'];
-          _mobileCtrl.text = userObj['mobile'];
-          _imageURL = userObj['imageURL'];
+          _nameCtrl.text = userObj['displayName'].toString();
+          _emailCtrl.text = userObj['email'].toString();
+          _mobileCtrl.text = userObj['mobile'].toString();
+          _imageURL = userObj['imageURL'].toString();
         },
       );
     });

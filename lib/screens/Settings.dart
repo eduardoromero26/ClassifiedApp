@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_name/screens/MyAds.dart';
+import 'package:project_name/screens/my_ads.dart';
 import 'package:project_name/screens/profile.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,9 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(
         () {
           userObj = {"id": res.id, ...res.data()!};
-          _userName = userObj['displayName'];
-          _userMobile = userObj['mobile'];
-          _imageURL = userObj['imageURL'];
+          _userName = userObj['displayName'].toString();
+          _userMobile = userObj['mobile'].toString();
+          _imageURL = userObj['imageURL'].toString();
         },
       );
     });

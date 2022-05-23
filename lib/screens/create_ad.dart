@@ -26,7 +26,7 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
   TextEditingController _descriptionCtrl = TextEditingController();
   TextEditingController _mobileCtrl = TextEditingController();
   TextEditingController _priceCtrl = TextEditingController();
-  var _imageAd = "";
+  var _uploadImages;
   var userObj;
   var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
@@ -48,27 +48,29 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
       var uploadedURL = await storageRef.ref.getDownloadURL();
       print(uploadedURL);
       setState(() {
-        _imageAd = uploadedURL;
+        _uploadImages = uploadedURL;
       });
     }
   }
 
   createAdd() async {
+    var sku = getRandomString(12);
     var uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance.collection("ads").doc(getRandomString(12)).set({
+    FirebaseFirestore.instance.collection("ads").doc(sku).set({
       "uid": FirebaseAuth.instance.currentUser!.uid,
       "title": _titleCtrl.text,
       "description": _descriptionCtrl.text,
       "mobile": _mobileCtrl.text,
       "price": _priceCtrl.text,
-      "images": _imageAd,
+      "images": _uploadImages,
       "authorName": _userName,
       "createdAt": FieldValue.serverTimestamp(),
+      "sku": sku,
     });
     Get.offAll(const HomeScreen());
   }
 
-   getUserData() {
+  getUserData() {
     FirebaseFirestore.instance
         .collection("accounts")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -131,6 +133,19 @@ class _CreateAddScreenState extends State<CreateAddScreen> {
               ),
             ),
             const SizedBox(height: 4),
+            
+            _uploadImages==null
+            ? Container(height: 20)
+            : Container(
+              height: 100,
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.only(right: 12),
+              child: Image.network(
+                _uploadImages.toString(),
+                height: 100,
+                width: 100,
+              ),
+            ),
             const SizedBox(
               height: 12,
             ),
