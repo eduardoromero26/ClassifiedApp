@@ -33,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         () {
           userObj = {"id": res.id, ...res.data()!};
           _userName = userObj['displayName'].toString();
-          _userMobile = userObj['mobile'].toString();
+          _mobileCtrl.text = userObj['mobile'].toString();
           _imageURL = userObj['imageURL'].toString();
         },
       );
